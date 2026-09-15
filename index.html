@@ -123,9 +123,26 @@ const TOTAL = RULES.length * 3;
 const L = ["A","B","C","D"];
 
 let S = load();
-function load(){ try{ const s = JSON.parse(localStorage.getItem(KEY)||"null"); if(s && s.answers) return s; }catch(e){} return {name:"",answers:{},cur:0,started:null,finished:null,view:"intro"}; }
+function fresh(){ return {name:"",answers:{},cur:0,started:null,finished:null,view:"intro"}; }
+function load(){
+  const f = fresh();
+  try{
+    const s = JSON.parse(localStorage.getItem(KEY)||"null");
+    if(!s || typeof s!=="object") return f;
+    f.name = typeof s.name==="string" ? s.name.slice(0,60) : "";
+    if(s.answers && typeof s.answers==="object"){ for(const r of RULES) for(let i=0;i<3;i++){ const v=s.answers[r.n+"-"+i]; if(Number.isInteger(v) && v>=0 && v<r.q[i].o.length) f.answers[r.n+"-"+i]=v; } }
+    f.cur = Number.isInteger(s.cur) ? Math.min(Math.max(s.cur,0),RULES.length-1) : 0;
+    f.started = typeof s.started==="string" ? s.started : null;
+    f.finished = typeof s.finished==="string" ? s.finished : null;
+    f.view = (s.view==="rule" || s.view==="results") && f.name ? s.view : "intro";
+    if(f.view==="results" && !complete(f.answers)) f.view="rule";
+  }catch(e){}
+  return f;
+}
+function complete(A){ return RULES.every(r=>answered(r.n, A)===3); }
+function storageOK(){ try{ localStorage.setItem(KEY+"-t","1"); localStorage.removeItem(KEY+"-t"); return true; }catch(e){ return false; } }
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
-function answered(n){ let c=0; for(let i=0;i<3;i++) if(S.answers[n+"-"+i]!=null) c++; return c; }
+function answered(n, A){ A = A || S.answers; let c=0; for(let i=0;i<3;i++) if(A[n+"-"+i]!=null) c++; return c; }
 function totalAnswered(){ return Object.keys(S.answers).length; }
 function esc(s){ return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
 function mmss(d){ return Math.floor(d/60)+":"+String(d%60).padStart(2,"0"); }
@@ -156,17 +173,18 @@ function renderIntro(){
     </ol>
     <div class="field">
       <label for="name">Your name</label>
-      <input id="name" type="text" autocomplete="name" placeholder="First and last name" value="${esc(S.name||"")}">
+      <input id="name" type="text" autocomplete="name" placeholder="First and last name" maxlength="60" value="${esc(S.name||"")}">
     </div>
     <div class="nav">
       <span></span>
       <button class="btn primary" id="start">${resume ? "Continue where I left off" : "Start the quiz"}</button>
     </div>
     ${resume ? `<div class="hint">Progress found on this device: ${totalAnswered()} of ${TOTAL} questions answered.</div>` : ""}
+    ${storageOK() ? "" : `<div class="hint" style="color:var(--bad)">Heads up: this browser is blocking saved progress (private mode?). You can still take the quiz, but finish it in one sitting.</div>`}
   </div>`;
   const nameEl = document.getElementById("name");
   document.getElementById("start").onclick = () => {
-    const nm = nameEl.value.trim();
+    const nm = nameEl.value.trim().slice(0,60);
     if(!nm){ nameEl.focus(); nameEl.style.outline="2px solid var(--accent)"; return; }
     S.name = nm; if(!S.started) S.started = new Date().toISOString();
     S.view = "rule"; if(S.cur==null) S.cur = 0; save(); render();
@@ -230,7 +248,7 @@ function renderRule(i){
   document.getElementById("prev").onclick = () => { S.cur = i-1; save(); render(); };
   document.getElementById("next").onclick = () => {
     if(last){
-      if(totalAnswered()<TOTAL){
+      if(!complete()){
         const missing = RULES.filter(x=>answered(x.n)<3).map(x=>x.n);
         document.getElementById("nextHint").textContent = "Some rules are not finished yet: " + missing.join(", ") + ". Use the 'Jump to a rule' list below.";
         return;
