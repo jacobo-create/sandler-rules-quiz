@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<title>Sandler Rules Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<style>
+:root{
+  --ground:#F2F4F7; --surface:#FFFFFF; --ink:#1A2129; --muted:#5B6672; --line:#D8DEE5;
+  --accent:#C8102E; --accent-ink:#FFFFFF; --accent-soft:#FBE9EC; --accent-line:#E9A3AE;
+  --ok:#1E7F4F; --ok-soft:#E3F3EA; --bad:#B42318; --bad-soft:#FCE8E6;
+  --shadow:0 1px 2px rgba(26,33,41,.06),0 8px 24px -12px rgba(26,33,41,.18);
+  --radius:10px;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --ground:#12161B; --surface:#1B2129; --ink:#E8ECF0; --muted:#98A4B0; --line:#2C343D;
+  --accent:#FF5C6C; --accent-ink:#1A0A0D; --accent-soft:#3A1C22; --accent-line:#7A2E38;
+  --ok:#5BD08F; --ok-soft:#173225; --bad:#FF8A7A; --bad-soft:#3B1F1B;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+}}
+:root[data-theme="dark"]{
+  --ground:#12161B; --surface:#1B2129; --ink:#E8ECF0; --muted:#98A4B0; --line:#2C343D;
+  --accent:#FF5C6C; --accent-ink:#1A0A0D; --accent-soft:#3A1C22; --accent-line:#7A2E38;
+  --ok:#5BD08F; --ok-soft:#173225; --bad:#FF8A7A; --bad-soft:#3B1F1B;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:17px;line-height:1.5;padding-block:0 48px;padding-inline:16px}
+h1,h2,h3{font-family:"Bricolage Grotesque","Source Sans 3",system-ui,sans-serif;text-wrap:balance;margin:0;line-height:1.1}
+button{font:inherit;cursor:pointer}
+a{color:var(--accent)}
+.wrap{max-width:720px;margin:0 auto}
+/* top bar */
+.bar{position:sticky;top:0;z-index:5;background:var(--ground);padding-block:12px 8px;border-bottom:1px solid var(--line);margin-inline:-16px;padding-inline:16px}
+.bar-in{max-width:720px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:14px;color:var(--muted)}
+.bar-in strong{color:var(--ink);font-weight:600}
+.track{height:4px;background:var(--line);border-radius:2px;margin-top:8px;overflow:hidden;max-width:720px;margin-inline:auto}
+.track i{display:block;height:100%;width:0;background:var(--accent);transition:width .3s}
+.pill{font-variant-numeric:tabular-nums}
+/* cards */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px;margin-top:24px}
+.eyebrow{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.rulenum{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:64px;line-height:1;color:var(--accent);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.ruletitle{font-size:26px;font-weight:700;margin-top:6px}
+.watch{display:inline-flex;align-items:center;gap:10px;margin-top:18px;padding:10px 16px 10px 12px;border-radius:999px;background:var(--ink);color:var(--ground);text-decoration:none;font-weight:600;font-size:15px}
+.watch svg{width:18px;height:18px;fill:currentColor}
+.watch small{font-weight:400;opacity:.75;font-variant-numeric:tabular-nums}
+.q{margin-top:28px;padding-top:22px;border-top:1px solid var(--line)}
+.q h3{font-size:19px;font-weight:700;font-family:"Source Sans 3",sans-serif;line-height:1.35}
+.q h3 span{color:var(--muted);font-weight:600;margin-right:8px;font-variant-numeric:tabular-nums}
+.opts{display:grid;gap:8px;margin-top:12px}
+.opt{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:var(--surface);cursor:pointer;transition:border-color .15s,background .15s}
+.opt:hover{border-color:var(--muted)}
+.opt input{margin:4px 0 0;accent-color:var(--accent);flex:none;width:18px;height:18px}
+.opt .l{font-weight:700;color:var(--muted);flex:none;width:20px}
+.opt.on{border-color:var(--accent);background:var(--accent-soft)}
+.opt:focus-within{outline:2px solid var(--accent);outline-offset:2px}
+.nav{display:flex;justify-content:space-between;gap:12px;margin-top:28px;flex-wrap:wrap}
+.btn{padding:12px 20px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-weight:600}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.hint{font-size:14px;color:var(--muted);margin-top:10px}
+.video{margin-top:18px;aspect-ratio:16/9;max-width:100%;border-radius:8px;overflow:hidden;background:#000}
+.video iframe{width:100%;height:100%;border:0;display:block}
+/* intro */
+.hero h1{font-size:44px;font-weight:800;letter-spacing:-.02em}
+.hero p{max-width:60ch}
+.field{margin-top:20px}
+.field label{display:block;font-weight:600;margin-bottom:6px}
+.field input{width:100%;font:inherit;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:var(--ground);color:var(--ink)}
+.field input:focus{outline:2px solid var(--accent);outline-offset:1px}
+.steps{display:grid;gap:10px;margin:22px 0 0;padding:0;list-style:none;counter-reset:s}
+.steps li{display:flex;gap:14px;align-items:flex-start;counter-increment:s}
+.steps li::before{content:counter(s);flex:none;width:28px;height:28px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-weight:800;display:grid;place-items:center;font-size:14px;font-family:"Bricolage Grotesque",sans-serif}
+/* jump grid */
+.jump{margin-top:18px}
+.jump summary{cursor:pointer;color:var(--muted);font-size:14px;font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:6px;margin-top:12px}
+.grid button{aspect-ratio:1;border-radius:6px;border:1px solid var(--line);background:var(--surface);font-weight:600;font-size:14px;font-variant-numeric:tabular-nums;color:var(--muted)}
+.grid button.done{background:var(--ink);color:var(--ground);border-color:var(--ink)}
+.grid button.part{background:var(--accent-soft);border-color:var(--accent-line);color:var(--ink)}
+.grid button.cur{outline:2px solid var(--accent);outline-offset:1px}
+/* results */
+.score{display:flex;gap:28px;align-items:baseline;flex-wrap:wrap;margin-top:8px}
+.score .big{font-family:"Bricolage Grotesque",sans-serif;font-size:72px;font-weight:800;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.score .sub{color:var(--muted);font-size:16px}
+.rgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:6px;margin-top:16px}
+.rgrid div{aspect-ratio:1;border-radius:6px;display:grid;place-items:center;font-weight:700;font-size:14px;font-variant-numeric:tabular-nums;border:1px solid var(--line)}
+.rgrid .s3{background:var(--ok-soft);color:var(--ok);border-color:transparent}
+.rgrid .s2{background:var(--accent-soft);color:var(--ink);border-color:var(--accent-line)}
+.rgrid .s1,.rgrid .s0{background:var(--bad-soft);color:var(--bad);border-color:transparent}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-top:10px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:6px}
+.send{margin-top:26px;padding:20px;border-radius:var(--radius);background:var(--accent-soft);border:1px solid var(--accent-line)}
+.send h3{font-size:18px;font-family:"Source Sans 3",sans-serif}
+.send .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+textarea{width:100%;font:13px/1.45 ui-monospace,Menlo,Consolas,monospace;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);margin-top:12px;min-height:160px}
+.toast{font-size:14px;margin-top:8px;color:var(--ok);font-weight:600;min-height:20px}
+[hidden]{display:none!important}
+@media (max-width:480px){.card{padding:20px}.hero h1{font-size:34px}.rulenum{font-size:52px}.score .big{font-size:56px}}
+@media (prefers-reduced-motion:reduce){.track i{transition:none}}
+</style>
+
+<div class="bar" id="bar" hidden>
+  <div class="bar-in"><span><strong id="barRule"></strong></span><span class="pill" id="barCount"></span></div>
+  <div class="track"><i id="barFill"></i></div>
+</div>
+
+<div class="wrap" id="app"></div>
+
+<script>
+const RULES = [{"n": 1, "id": "tkP5nrzvuQQ", "t": "You Have to Learn to Fail, to Win", "d": 112, "q": [{"q": "Why does Dave say failure is unavoidable in sales?", "o": ["Because in sales you lose more than you win; nobody closes 10 for 10", "Because managers set quotas too high", "Because prospects are unpredictable and rarely honest", "Because most salespeople are poorly trained"], "a": 0}, {"q": "What does Dave say to do right after losing a big deal?", "o": ["Ask what you learned and create a lesson from it", "Lower your price on the next deal to make up for it", "Ask the prospect for a second chance", "Take a few days off to reset"], "a": 0}, {"q": "According to the video, what does it mean if you are never failing?", "o": ["Your qualification process is excellent", "You are the top performer on the team", "You are not stretching and are sitting in your comfort zone", "You are only calling on warm leads"], "a": 2}]}, {"n": 2, "id": "j6emy-VHao0", "t": "Don't Spill Your Candy in the Lobby", "d": 78, "q": [{"q": "What does 'spilling your candy in the lobby' mean for a salesperson?", "o": ["Showing up and telling the prospect all about your products before you understand their problems", "Giving discounts before the prospect asks", "Losing your notes before a meeting", "Rushing to the close too early"], "a": 0}, {"q": "According to Dave, when is the only time people care how wonderful your product is?", "o": ["When they have compared it to competitors", "When you connect it to their problems and pain", "When the price is right", "When you present it with confidence"], "a": 1}, {"q": "What does Dave say you should become to uncover what matters to the prospect?", "o": ["A friend who builds rapport first", "An expert who demonstrates product knowledge", "A doctor who asks good questions", "A consultant who gives free advice"], "a": 2}]}, {"n": 3, "id": "V_HmffPI3PU", "t": "No Mutual Mystification", "d": 87, "q": [{"q": "What is 'mutual mystification'?", "o": ["Confusing the prospect with technical jargon", "A prospect refusing to share budget information", "Both sides walking away with different assumptions because nobody clarified what was said", "Two salespeople competing for the same account"], "a": 2}, {"q": "A prospect says 'money is no object.' What does Dave recommend?", "o": ["Say thank you and present the proposal", "Move straight to the premium option", "Stroke, repeat, reverse: thank them, repeat it back, and ask what that means in their world", "Ask for the budget number in writing"], "a": 2}, {"q": "Which of these statements should trigger you to stop and clarify?", "o": ["'I'll have to think about it and get back to you'", "'Money is no object'", "'You're certainly close'", "All of the above"], "a": 3}]}, {"n": 4, "id": "DJ72NmY-6IE", "t": "A Decision Not to Make a Decision is a Decision", "d": 94, "q": [{"q": "How does Dave rank the three answers a prospect can give you?", "o": ["No is best because it saves time, then yes, then maybe", "Yes is best, 'think it over' is second, no is worst", "Yes is best, no is second best, 'think it over' is the worst", "They are all equal as long as you follow up"], "a": 2}, {"q": "Who does Dave say is your biggest competitor?", "o": ["The firm down the road", "Online price comparison", "Your own company's slow turnaround", "Prospects who don't give you an answer and kick the can down the road"], "a": 3}, {"q": "Why is a funnel full of 'I want to think it over' a problem?", "o": ["It means you need more product training", "It looks good to your manager but wastes your most precious resource: time", "It is not a problem; maybes eventually turn into yeses", "It means your pricing is too high"], "a": 1}]}, {"n": 5, "id": "fWpE50dUJdw", "t": "Never Answer an Unasked Question", "d": 97, "q": [{"q": "In the software example, what mistake did the salesperson make at the end of a great call?", "o": ["Talked badly about a competitor", "Forgot to ask for the order", "Volunteered that a free upgrade was coming in 30 days", "Quoted a price that was too high"], "a": 2}, {"q": "How did the prospect react to the unasked-for information?", "o": ["They asked for a discount", "They asked to wait for the upgrade before buying", "They were thrilled and signed immediately", "They were paralyzed, wondering what was wrong with the software that it needed an upgrade"], "a": 3}, {"q": "What does Dave say 'throwing stuff on the pile' actually does?", "o": ["Steps on your own foot and makes it harder to close", "Shortens the sales cycle", "Builds trust through transparency", "Makes it easier for the prospect to say yes"], "a": 0}]}, {"n": 6, "id": "wwaTh9YKAJw", "t": "Don't Buy Back Tomorrow the Product or Service You Sold Today", "d": 112, "q": [{"q": "What does Dave say every buyer experiences after saying yes?", "o": ["Excitement to tell others", "Relief", "Pressure from their boss", "Buyer's remorse"], "a": 3}, {"q": "Where does Dave want the buyer's remorse to happen?", "o": ["In front of you, so you can deal with it using your face-to-face skills", "It should be avoided entirely", "In an email so you have a record", "After you leave, so they can process it alone"], "a": 0}, {"q": "What technique does Dave suggest before leaving after a yes?", "o": ["Offer a small bonus to lock in the deal", "Bring back up a minor objection from the sales cycle, like 'you wanted blue, we only have red, is red still OK?'", "Ask for a referral right away", "Confirm the delivery date in writing"], "a": 1}]}, {"n": 7, "id": "xUCQ4kS0pr8", "t": "You Never Have to Like Prospecting; You Just Have to Do It", "d": 113, "q": [{"q": "What does Dave think of a salesperson who says 'I love prospecting'?", "o": ["They are a natural", "They are probably lying about their numbers", "They have never actually done it", "They should be promoted to manager"], "a": 2}, {"q": "What is Dave's first tip for making prospecting something you just do?", "o": ["Reward yourself after every yes", "Only call warm leads", "Look for the no's, not the yeses: if it takes 20 calls to get one appointment, go collect 19 no's", "Have someone else make the first call"], "a": 2}, {"q": "What is the 'behavioral plan' Dave describes?", "o": ["A plan to hire an appointment setter", "A script for handling objections", "A list of prospects ranked by revenue", "Breaking prospecting into a daily number (10 today, 10 tomorrow) instead of facing 70 at the end of the week"], "a": 3}]}, {"n": 8, "id": "x7a0UQKWM2M", "t": "When Prospecting, Go for the Appointment", "d": 85, "q": [{"q": "What is the time you block for prospecting meant for?", "o": ["Getting appointments and making as many dials as possible", "Sending follow-up emails", "Researching prospects on LinkedIn", "Running full sales calls with whoever picks up"], "a": 0}, {"q": "A prospect on a cold call says 'tell me a little more.' What does Dave say to do?", "o": ["Transfer them to your manager", "Send them a brochure and call back next week", "Give your full pitch since they are interested", "Cut it short, get the appointment, get off the phone and make the next dial"], "a": 3}, {"q": "How long should a prospecting call last, according to Dave?", "o": ["About 10 minutes", "30 minutes to fully qualify them", "Under 3 minutes", "As long as the prospect will talk"], "a": 2}]}, {"n": 9, "id": "x6FHVSYjBww", "t": "Every Unsuccessful Prospecting Call Earns Compound Interest", "d": 80, "q": [{"q": "What does 'compound interest' mean in this rule?", "o": ["Each unsuccessful call should teach you something so you adjust and get better on every call", "Every call adds to your commission over time", "Prospects you call repeatedly eventually say yes", "Referrals multiply from each call"], "a": 0}, {"q": "What example of a trend does Dave give?", "o": ["Prospects asking about price first", "Hearing the same competitor mentioned three times", "Gatekeepers asking for your company name", "Voicemails going unanswered on Mondays"], "a": 1}, {"q": "What does Dave call dialing without paying attention or adjusting?", "o": ["Wasting time", "Building resilience", "Practice", "Playing the numbers game"], "a": 0}]}, {"n": 10, "id": "NrArcgRZn0Q", "t": "Develop a Prospecting Awareness", "d": 102, "q": [{"q": "What is the first thing Dave says you must do?", "o": ["Memorize your 30-second commercial", "Buy a list of leads", "Set a daily call goal", "Clearly identify the characteristics that separate a suspect from a prospect"], "a": 3}, {"q": "Why does the difference between a suspect and a prospect matter?", "o": ["You want to invest your time and energy into prospects, not suspects", "Only prospects can give referrals", "Suspects require a different script", "Suspects should be handed to marketing"], "a": 0}, {"q": "Once you have a prospect, what do you figure out next?", "o": ["Whether they are willing and able to buy and have the need, and whether it makes sense to keep talking", "Their personality type", "How to get past the gatekeeper", "Which product to present"], "a": 0}]}, {"n": 11, "id": "shhUPvufApk", "t": "Money Does Grow on Trees", "d": 103, "q": [{"q": "What kind of tree is Dave talking about?", "o": ["A referral tree", "An org chart", "A pipeline tree", "A decision tree"], "a": 0}, {"q": "According to Dave, how much more effective is closing a referral compared to a net-new opportunity?", "o": ["Twice as effective", "Ten times more effective", "About the same", "Five times more effective"], "a": 3}, {"q": "How should you treat asking for referrals?", "o": ["As a proactive, ongoing process, not an event", "As something you do once a year with your best clients", "As something you leave to marketing", "As something to do only after a deal closes"], "a": 0}]}, {"n": 12, "id": "WYlot8kc3JM", "t": "Answer Every Question with a Question", "d": 98, "q": [{"q": "Before answering a prospect's question, what does Dave want you to know?", "o": ["Whether your competitor gets asked the same thing", "The correct product answer", "The prospect's budget", "The intent: why did they ask, and did I truly understand it"], "a": 3}, {"q": "In the 'Dad, what are we doing this weekend?' example, how did Dave respond?", "o": ["He said 'I'm not sure, is there a reason you ask? Would you like to do something?'", "He asked them to check the calendar", "He said 'nothing, why?'", "He listed the weekend plans"], "a": 0}, {"q": "Why is answering quickly a hard habit to break?", "o": ["Because prospects expect fast answers", "Because we were taught in school to answer questions fast and feel good about it", "Because silence is uncomfortable", "Because sales managers reward speed"], "a": 1}]}, {"n": 13, "id": "bCiqippeXg0", "t": "No Mind Reading", "d": 148, "q": [{"q": "What is 'mind reading' in sales?", "o": ["Predicting which competitor they are talking to", "Reading the prospect's body language", "Filling in the blanks and assuming you know what the prospect means because you have heard it a million times", "Guessing the prospect's budget"], "a": 2}, {"q": "A prospect says 'we're working with one of your competitors.' What does Dave recommend?", "o": ["Ask to speak with the decision maker", "Offer a lower price to switch", "Say 'I appreciate the transparency, help me understand why you brought that up'", "Explain why you are better than that competitor"], "a": 2}, {"q": "Which phrases does Dave say to use instead of assuming?", "o": ["'Our competitors say that too'", "'Let me tell you how we handle that'", "'Help me understand what that means' and 'I'm a little confused when you said X, you must be telling me that for a reason'", "'Trust me, I've seen this before'"], "a": 2}]}, {"n": 14, "id": "N47LVqd3Pgg", "t": "A Prospect Who Is Listening Is No Prospect at All", "d": 104, "q": [{"q": "What talking ratio does Dave say Sandler always recommended?", "o": ["Salesperson 70%, prospect 30%", "Salesperson 90%, prospect 10%", "Prospect 70%, salesperson 30%", "50/50"], "a": 2}, {"q": "If you are talking 90% of the call, what is happening?", "o": ["You are controlling the sale", "The prospect is not engaging and you don't learn what their issues are", "You are building credibility", "The prospect is absorbing your product knowledge"], "a": 1}, {"q": "What analogy does Dave use for a bad sales call?", "o": ["A bad first date where one person talks about themselves all dinner", "A one-sided phone call with a telemarketer", "A bad job interview", "A lecture with no questions allowed"], "a": 0}]}, {"n": 15, "id": "jGSEgeimoi8", "t": "The Best Sales Presentation You Will Ever Give, The Prospect Will Never See", "d": 107, "q": [{"q": "What is the problem with a polished presentation, according to Dave?", "o": ["It only works with senior decision makers", "The prospect knows a close is coming, there is no interaction, and it causes stalls that lengthen the sales cycle", "It takes too long to build", "Prospects prefer written proposals"], "a": 1}, {"q": "Where does Dave say your value as a salesperson comes from?", "o": ["The questions you ask and the information you gather", "Your years of experience", "Your product certifications", "The information you dispense"], "a": 0}, {"q": "How does Dave use a third-party story to open a conversation?", "o": ["'When I talk to people like you, the top two issues I hear are X and Y. Does that sound familiar?'", "'Most people in your position buy the premium package'", "'Let me show you what we did for a competitor'", "'Our biggest client saw a 40% improvement'"], "a": 0}]}, {"n": 16, "id": "u07WTnGOALw", "t": "Never Ask for the Order - Make the Prospect Give Up", "d": 111, "q": [{"q": "Why does Dave say not to push for the close with 'is now the time?'", "o": ["When you push, people resist; you want to pull instead", "It should only be done by managers", "It sounds unprofessional", "It gives the prospect a chance to say no"], "a": 0}, {"q": "Which question does Dave call a 'magical' pull question?", "o": ["'What would you like me to do now?'", "'Can we sign today?'", "'Is there any reason not to move forward?'", "'What would it take to earn your business?'"], "a": 0}, {"q": "What does Dave think of 'ABC: Always Be Closing'?", "o": ["It works for transactional sales only", "It is the foundation of Sandler", "It is pushing, and pushing is what an amateur does", "It is fine as long as you smile"], "a": 2}]}, {"n": 17, "id": "ppANRxlJcqo", "t": "The Professional Does What They Did as a Dummy - on Purpose", "d": 109, "q": [{"q": "When you were new to your industry, what were you forced to do?", "o": ["Sell only the simplest product", "Memorize the product catalog", "Shadow senior reps", "Ask a ton of questions and say 'I'm not sure, let me find out'"], "a": 3}, {"q": "What happens after years in the industry and 'product school'?", "o": ["You start spewing acronyms and product knowledge your buyers don't understand", "You need fewer questions", "You close more because you know more", "You become a trusted advisor automatically"], "a": 0}, {"q": "Where does Dave say to keep your product knowledge?", "o": ["In the proposal", "Front and center to establish credibility", "In a leave-behind brochure", "In your back pocket, because it is not what establishes credibility"], "a": 3}]}, {"n": 18, "id": "ZkrJy0KVt9o", "t": "Don't Paint \"Seagulls\" in Your Prospect's Picture", "d": 113, "q": [{"q": "What is a 'seagull' in this rule?", "o": ["An objection you did not expect", "A distraction during a sales call", "A feature or benefit you add to the conversation that the prospect never said was important", "A competitor who swoops in late"], "a": 2}, {"q": "The prospect has four problems, you solve all four, then add ten more things your product does. What is the risk?", "o": ["They want to see all ten features demonstrated", "They ask for a bigger discount", "They feel they are paying for things they don't need and start thinking about things that were not even relevant", "There is no risk; more value always helps"], "a": 2}, {"q": "What should you talk about instead?", "o": ["Your full feature list, briefly", "The features your competitors lack", "Only what the prospect sees as their picture, what is important to them", "Your company history"], "a": 2}]}, {"n": 19, "id": "Vy6nJ1l7oSM", "t": "Never Help the Prospect End the Interview", "d": 101, "q": [{"q": "The prospect looks disengaged, is grimacing and checking their phone. What is the wrong move?", "o": ["Pause and wait", "Change the subject", "Ask what is going on", "Say 'thanks for inviting me in, let's get together at a future time' and leave"], "a": 3}, {"q": "What rule of thumb does Dave give for this situation?", "o": ["If in doubt, get out", "Never interrupt a prospect", "If you feel it, say it", "Silence is golden"], "a": 2}, {"q": "What does Dave suggest saying?", "o": ["'I get the feeling I may have said something that took us offline or upset you, and I apologize. Help me understand.'", "'Let me skip to the good part'", "'Is there a problem with our pricing?'", "'I can see you're busy, should I come back later?'"], "a": 0}]}, {"n": 20, "id": "URDfbxfKR6I", "t": "The Bottom Line of Professional Selling Is Going to the Bank", "d": 140, "q": [{"q": "What does Dave mean by 'be a scientist, don't wing it'?", "o": ["Use data to pick which prospects to call", "Test different closing lines", "Follow a consistent methodology start to finish and check the ratios between each step of your process", "Track competitor pricing"], "a": 2}, {"q": "What is the 'cookbook' Dave describes?", "o": ["Your company's pricing guide", "A list of objection responses", "A collection of third-party stories", "What you have to do, when, and how often, because you can only control your behavior, not the outcome"], "a": 3}, {"q": "Why is Dave a believer in talk tracks?", "o": ["They make sure every rep says the same thing", "They make you sound polished", "They shorten training time", "If you know your talk track you can focus on the buyer instead of thinking about what to say next"], "a": 3}]}, {"n": 21, "id": "S1yhVQFhv-A", "t": "Sell Today - Educate Tomorrow", "d": 103, "q": [{"q": "Which of these does Dave say does NOT sell?", "o": ["Third-party stories", "Letting the prospect talk", "Asking pain questions", "400 PowerPoint slides about how wonderful you are and every award you have won"], "a": 3}, {"q": "What is the one simple thing you have to do to sell?", "o": ["Get the decision maker in the room", "Beat the competitor's price", "Demonstrate every feature", "Connect the prospect's pain to what you can solve"], "a": 3}, {"q": "When should the buyer learn about all the other cool things the product does?", "o": ["Never; it is irrelevant", "In the proposal appendix", "In the first meeting, to build excitement", "After they have purchased, otherwise you overwhelm and paralyze them into indecision"], "a": 3}]}, {"n": 22, "id": "A63Pe91VBXI", "t": "Only Give a Presentation for the \"Kill\"", "d": 109, "q": [{"q": "What is 'premature presentation syndrome'?", "o": ["Presenting before the decision maker arrives", "Presenting early in the process to educate the buyer, which prevents you from closing more business", "Rushing through your slides", "Presenting without slides"], "a": 1}, {"q": "What should you do before you present?", "o": ["Stay in the information-gathering phase as long as possible and connect the buyer's pains to what you will present", "Rehearse your close", "Confirm the budget in writing", "Send an agenda"], "a": 0}, {"q": "What does Dave say about team presentations?", "o": ["Let the most senior person do all the talking", "Everyone should know their roles and responsibilities; rehearse and never show up cold", "Split the presentation evenly", "Keep the team small"], "a": 1}]}, {"n": 23, "id": "sLJGkeWfQVo", "t": "The Way to Get Rid of a Bomb Is to Defuse It Before It Blows Up", "d": 119, "q": [{"q": "When does Dave say to put an issue on the table early?", "o": ["Only after the proposal is accepted", "When it comes up more than 80% of the time", "Never; let the prospect discover it", "Only when the prospect brings it up"], "a": 1}, {"q": "What example does Dave use?", "o": ["'I can't ship for six weeks, so if you need it faster we should talk about that right now'", "'Our software has a learning curve'", "'Our price is higher than the competition'", "'We had a bad review last year'"], "a": 0}, {"q": "Why bring up the problem early?", "o": ["It lowers the prospect's expectations", "It gives you more credibility and it is easier to fix a problem before it is a problem; you can't lose anything you don't have", "It lets you skip the presentation", "It forces a faster decision"], "a": 1}]}, {"n": 24, "id": "Y3wB3mkGPLg", "t": "Product Knowledge Used at the Wrong Time Can Be Intimidating", "d": 177, "q": [{"q": "Why do most salespeople use product knowledge and buzzwords, according to Dave?", "o": ["Because prospects ask for it", "To look smart and establish credibility, which usually backfires", "Because managers require it", "To answer questions accurately"], "a": 1}, {"q": "What does a buyer who does not understand your jargon usually say?", "o": ["'I don't understand, can you explain?'", "'How much does that cost?'", "'Let me get my technical person'", "'That's a great approach, could you put it in writing and send it to my office?'"], "a": 3}, {"q": "What is the goal Dave wants you to keep in mind with buyers?", "o": ["Prove you are the expert", "Maintain their 'okayness' and self-esteem, because uncomfortable people get rid of you", "Speed up the decision", "Get them to ask more questions"], "a": 1}]}, {"n": 25, "id": "RkdGIctQ6UY", "t": "When You Want to Know the Future, Bring It Back to the Present", "d": 125, "q": [{"q": "What does the dog and tennis ball story illustrate?", "o": ["You should always be ready to run", "Persistence pays off", "Prospects love salespeople who respond fast", "Buyers keep asking you to fetch things (research, free trials, bring in the team) and you hope it progresses the sale"], "a": 3}, {"q": "Before doing something that takes time and energy, what does Dave say to ask?", "o": ["'Will you sign if I do this?'", "'Who else should see this?'", "'Happy to do it. Let's pretend I do all of that and show you. What happens next?'", "'How soon do you need it?'"], "a": 2}, {"q": "If the answer to 'what happens next' is 'we'll think about it when we decide in five years', what should you conclude?", "o": ["Offer a discount to speed them up", "Ask for a referral instead", "That may not be acceptable; don't let buyers consume your time when it is not progressing the sale", "That is normal; keep going"], "a": 2}]}, {"n": 26, "id": "k0xQmsd1vL8", "t": "People Buy In Spite of the Hard Sell, Not Because of It", "d": 86, "q": [{"q": "Complete Dave's line: 'People love to buy, but they hate...'", "o": ["...to wait", "...to be sold", "...to pay", "...to decide"], "a": 1}, {"q": "What happens when you push with lines like 'would you buy today if I lowered the price?'", "o": ["They resist, because that is human dynamics", "They say yes to end the pressure", "They ask for a bigger discount", "They feel valued"], "a": 0}, {"q": "What does Dave say to do instead of pushing?", "o": ["Send a follow-up email", "Create an environment where people feel comfortable sharing, and pull them through the process with questions", "Use a softer closing line", "Wait for them to call you"], "a": 1}]}, {"n": 27, "id": "3sikQ2jS1MU", "t": "You Can't Sell Anybody Anything - They Must Discover They Want It", "d": 89, "q": [{"q": "What does Dave say about the person who can 'sell ice to Eskimos'?", "o": ["That is the goal", "It only works with a great script", "It works for small purchases only", "If the buyer does not think they have a problem, you can't sell them regardless of product or discount"], "a": 3}, {"q": "If the buyer has not discovered their pain, what do you become?", "o": ["A friend", "A consultant", "A transactional salesperson pushing the product of the month", "A trusted advisor"], "a": 2}, {"q": "How does Dave suggest helping prospects discover they have an issue?", "o": ["Be a doctor: ask questions, and use your 30-second commercial and third-party stories", "Show them competitor case studies", "Offer a free trial", "Send them industry statistics"], "a": 0}]}, {"n": 28, "id": "A-1E82zwq_I", "t": "When Under Attack - Fall Back", "d": 88, "q": [{"q": "What is the natural human reaction when attacked, and why is it a problem?", "o": ["To defend and justify, which makes the other person defend too and the argument escalates", "To apologize too much, which loses credibility", "To go silent, which looks weak", "To walk away, which ends the sale"], "a": 0}, {"q": "What does 'fall back' mean in practice?", "o": ["Offer a discount to calm them down", "Let your manager handle it", "Change the subject", "Take ownership regardless of whose fault it is: 'you're right, that was my bad, I'll do better'"], "a": 3}, {"q": "What is the key mindset Dave wants?", "o": ["Never admit a mistake", "Keep your ego out of the sales process", "Match the prospect's energy", "Always be right"], "a": 1}]}, {"n": 29, "id": "0NIi4jWi38U", "t": "Your Meter's Always Running", "d": 63, "q": [{"q": "What does 'your meter is always running' mean?", "o": ["Always be prospecting", "Track every hour you spend on an account", "No matter how long you have known the customer or how relaxed the setting, you still represent the company", "Bill for every service call"], "a": 2}, {"q": "How does Dave say to think about long-time customers?", "o": ["As partners", "As friends first, buyers second", "As buyers first, maybe work friends second", "As referral sources"], "a": 2}, {"q": "What happens once you get the two confused?", "o": ["You get more referrals", "You become a trusted advisor", "Nothing, as long as the deal closes", "You will be in trouble"], "a": 3}]}, {"n": 30, "id": "0bLQUjcC7Bg", "t": "You Can't Lose Anything You Don't Have", "d": 74, "q": [{"q": "What does Dave say about the 'coulda, shoulda, woulda' mindset?", "o": ["It is not true; you can't lose something you never had", "It helps you learn", "It is a sign of a good salesperson", "It is healthy in small doses"], "a": 0}, {"q": "When does a salesperson become a 'hostage'?", "o": ["When the prospect is a big company", "When the funnel is thin, you're losing more than winning, or you're on the edge of a bonus, so you get hesitant and follow the prospect's process", "When the manager listens to calls", "When the competitor is cheaper"], "a": 1}, {"q": "What does Dave promise if you follow your own process?", "o": ["Shorter sales cycles", "Fewer objections", "A healthy pipeline, a healthy head, and a healthy wallet", "More referrals"], "a": 2}]}, {"n": 31, "id": "WISs2eJQLpM", "t": "Close the Sale or Close the File", "d": 95, "q": [{"q": "Why are funnels full of deals that may not be willing or able, according to Dave?", "o": ["Because prospects lie about their intent", "Because you hope some of it closes and your sales manager wants a fuller funnel too", "Because CRM systems make it hard to delete", "Because managers require a minimum number"], "a": 1}, {"q": "How does Dave re-energize a stalled deal?", "o": ["Ask for a meeting with their boss", "Say 'based on where we are, it seems there's not a fit, maybe we should close this for now and come back at a future time'", "Offer a limited-time discount", "Send a breakup email"], "a": 1}, {"q": "What are the two possible outcomes, and why does Dave say you win either way?", "o": ["They buy or they refer you", "They ask for a discount or they go silent", "They agree it's over (it was over anyway) or they say 'wait, here's what we need to do next'", "They get angry or they apologize"], "a": 2}]}, {"n": 32, "id": "5fXSzvSgHjo", "t": "Get an IOU for Everything You Do", "d": 89, "q": [{"q": "What is the problem with answering every customer request with 'no problem'?", "o": ["It makes you seem desperate", "The customer never acknowledges the favor because it happened too quickly", "It sounds unprofessional", "It commits you to things you can't do"], "a": 1}, {"q": "What does Dave suggest saying when a customer asks to move the delivery date?", "o": ["'I'm not sure, that may be an issue. How important is this? Let me check and call you back'", "'That will cost extra'", "'Sure, done'", "'Let me ask my manager'"], "a": 0}, {"q": "What benefit does Dave say this one move gives you?", "o": ["Faster payments", "Higher prices", "More referrals", "It keeps your competitors out of your accounts"], "a": 3}]}, {"n": 33, "id": "zMm6nAm-144", "t": "On Your Way to the Bank, Keep One Eye Over Your Shoulder", "d": 68, "q": [{"q": "When you hear a yes, what does it mean, according to Dave?", "o": ["You can stop selling", "Time to ask for referrals", "It just means they said yes; a lot can still happen before you get the check", "The deal is done"], "a": 2}, {"q": "What does Dave tell you to do about the gap between yes and the check?", "o": ["Get the contract signed on the spot", "Send the invoice faster", "Identify everything that could pop up in that gap and take care of each one", "Call the prospect daily"], "a": 2}, {"q": "What instinct does Dave warn against?", "o": ["Celebrating too early with the team", "Running back to the office to send the contract and invoice, taking the deal for granted", "Asking for a bigger order", "Telling your manager"], "a": 1}]}, {"n": 34, "id": "Jf__VIpotjI", "t": "Work Smart, Not Hard", "d": 79, "q": [{"q": "What does Dave say about his old belief 'I'm not smarter than you, but I'll outwork you'?", "o": ["It works for young salespeople", "It is the secret to his success", "It only works in the Northeast", "It is not a badge of courage; it tends to waste a lot of time"], "a": 3}, {"q": "What does working smart look like?", "o": ["Only calling on big accounts", "Having a process and methodology, knowing where you are and what comes next, and leading the buyer-seller dance", "Working fewer hours", "Delegating prospecting"], "a": 1}, {"q": "What happens when you have no plan or process?", "o": ["The buyer leads the dance and now you are working hard", "You learn more", "You close faster", "You improvise better"], "a": 0}]}, {"n": 35, "id": "0xm570w-rfE", "t": "If Your Competition Does It, Stop Doing It Right Away", "d": 105, "q": [{"q": "Why can't prospects tell you apart from your competitors?", "o": ["Because you sell the same product", "Because they don't do research", "Because you say the same things (quality, service, reputation, ROI), act the same and look the same", "Because your prices are similar"], "a": 2}, {"q": "When you sound the same as everyone else, what is the only way the prospect can choose?", "o": ["Relationship", "Price", "Brand reputation", "Delivery speed"], "a": 1}, {"q": "If you want to be treated differently, what do you have to do?", "o": ["Advertise more", "Act differently; the different thing becomes what the prospect focuses on and a conversation starter", "Offer more features", "Lower your price"], "a": 1}]}, {"n": 36, "id": "roY6Ol1x390", "t": "Only Decision Makers Can Get Others to Make Decisions", "d": 83, "q": [{"q": "Why does Dave mention being able to order quickly at a restaurant?", "o": ["When you are a decision maker you expect others to make decisions; when you are not, it feels OK that they don't", "Salespeople should eat fast", "It shows confidence to the prospect", "It is a rapport technique"], "a": 0}, {"q": "What does Dave say is your greatest competitor?", "o": ["Price", "Indecision: deals that are stagnant and not going anywhere", "Your own product gaps", "The company down the road"], "a": 1}, {"q": "What thought does Dave warn you not to have?", "o": ["'I need a bigger discount'", "'That makes sense, I wouldn't make this decision either'", "'I should have presented sooner'", "'They will never buy'"], "a": 1}]}, {"n": 37, "id": "-tjPvbHiHRs", "t": "All Prospects Lie, All the Time", "d": 99, "q": [{"q": "How does Dave soften the rule?", "o": ["'All prospects are protecting themselves all the time', and some don't even know the real issue", "'Prospects lie until they trust you'", "'Prospects only lie about budget'", "'Some prospects lie sometimes'"], "a": 0}, {"q": "What does the furniture store example show?", "o": ["Discounts drive traffic", "A shopper says 'no, just looking' to protect themselves, even when they came in to buy a $4,000 couch", "People need time to decide", "Retail salespeople are pushy"], "a": 1}, {"q": "What mindset does Dave recommend going into a call?", "o": ["Trust everything they say", "'I heard what they said, but I'm not sure it's accurate', then keep going through your process", "Assume they are hiding the budget", "Verify everything with their boss"], "a": 1}]}, {"n": 38, "id": "4A9eWO4S5-A", "t": "The Problem the Prospect Brings You Is Never The Real Problem", "d": 88, "q": [{"q": "In the example, a prospect asks for presentation skills training because they close 2 out of 10. What was the real problem?", "o": ["Their pricing", "Their slides", "Their closing technique", "Their qualification stage: they were presenting to people who were unwilling or unable"], "a": 3}, {"q": "According to Dave, fixing the real problem could take their close rate to what?", "o": ["10 out of 10", "8 out of 10", "5 out of 10", "3 out of 10"], "a": 1}, {"q": "What does Dave say your job is?", "o": ["Be a doctor of sales and figure out what is causing what they think is the problem", "Refer them to a specialist", "Sell them the product they asked for", "Solve the problem they bring you as fast as possible"], "a": 0}]}, {"n": 39, "id": "HT7YuSPpK-k", "t": "When All Else Fails, Become a Consultant", "d": 110, "q": [{"q": "What go-to move does Dave reject when a deal is lost?", "o": ["Lowering the price, because it destroys the credibility of everything you said before", "Asking for a referral", "Asking for feedback", "Sending a thank-you note"], "a": 0}, {"q": "What does Dave say to do instead?", "o": ["Walk away quietly", "Say 'now that it's over, can I take off my sales hat and be a consultant?' and tell them what they are going to experience", "Offer a free trial", "Ask to speak with their boss"], "a": 1}, {"q": "What is the payoff of the consultant approach?", "o": ["They give you a referral", "When what you predicted happens, they think 'Dave was right', giving you instant credibility and a better position next time", "They apologize", "They buy on the spot"], "a": 1}]}, {"n": 40, "id": "ppI_v4OE-3c", "t": "Fake It 'Til You Make It", "d": 101, "q": [{"q": "What does 'fake it till you make it' NOT mean?", "o": ["Lying or being disingenuous", "Calling on senior executives", "Acting confident", "Practicing your talk track"], "a": 0}, {"q": "What does it mean?", "o": ["Copy top performers", "Dress for the job you want", "Act as if you have equal business stature; your mindset changes, so you act differently, and what you fake you become", "Pretend to have experience you don't have"], "a": 2}, {"q": "Why does Dave say he is still faking it after 30 years?", "o": ["Because prospects expect it", "Because growing means stretching into new things and acting as if", "Because it is a Sandler tradition", "Because he is not confident"], "a": 1}]}, {"n": 41, "id": "5RlPM5_XemE", "t": "There Are No Bad Prospects, Only Bad Salespeople", "d": 76, "q": [{"q": "Which rationalizations does Dave call out?", "o": ["'The product wasn't ready'", "'The prospect wasn't the decision maker'", "'The competitor was cheaper'", "'I had to discount to save the deal' and 'I went over ten calls because of the time of day'"], "a": 3}, {"q": "What does the rule really mean?", "o": ["Fire bad prospects", "Only call good prospects", "Take ownership; don't blame the prospect, your coworkers, or your product", "Salespeople need more training"], "a": 2}, {"q": "What should you do if a prospect is unwilling and unable?", "o": ["Move on, and don't externalize the loss", "Hand them to a coworker", "Keep following up", "Discount until they buy"], "a": 0}]}, {"n": 42, "id": "xaSl-TLPs68", "t": "A Winner Has Alternatives; A Loser Puts All Their Eggs in One Basket", "d": 96, "q": [{"q": "Which non-sales examples does Dave use?", "o": ["Betting on one horse", "Buying one lottery ticket", "Putting all retirement money in Blockbuster stock, or all of it in real estate before the 2008 crash", "Studying only one subject"], "a": 2}, {"q": "How does this rule apply to selling?", "o": ["Have a backup product", "Work with two managers", "Call more prospects", "Be flexible: have different presentations based on the buyer, and don't assume your practiced script will work"], "a": 3}, {"q": "What happens when you put everything into one basket?", "o": ["You close bigger deals", "You limit yourself", "You focus better", "You save time"], "a": 1}]}, {"n": 43, "id": "KqmmNTELujQ", "t": "You Don't Learn How to Win by Getting a Yes; You Learn How to Win by Getting a No", "d": 83, "q": [{"q": "How often does Dave say you will hear no in sales?", "o": ["9 out of 10 times", "5 out of 10 times", "2 out of 10 times", "8 out of 10 times"], "a": 3}, {"q": "What tool does Dave recommend for learning from a no?", "o": ["Reviewing the CRM", "Role playing", "Asking the prospect why", "Journaling what you did wrong"], "a": 3}, {"q": "What is the process Dave describes after a no?", "o": ["Call your manager", "Blame the prospect, then move on", "Take responsibility ('it's my fault'), ask what you could have done differently, and decide what to eliminate in the future", "Lower the price next time"], "a": 2}]}, {"n": 44, "id": "OE-betHqJEg", "t": "When Your Foot Hurts, You're Probably Standing on Your Own Toe", "d": 88, "q": [{"q": "When things are not going well in the sales process, what does Dave say is probably true?", "o": ["The prospect is difficult", "The market is slow", "The product is the problem", "You are causing it, or you could fix it"], "a": 3}, {"q": "In the team-selling example, what should have happened?", "o": ["A senior rep leading", "A pre-call planner so the selling team was on the same page", "A smaller team", "A longer meeting"], "a": 1}, {"q": "What should you look for in your own process?", "o": ["Ways to cut costs", "Which competitor is winning", "How to get more leads", "What you are doing that causes people not to decide, longer selling cycles, or discounting"], "a": 3}]}, {"n": 45, "id": "_A1sSnXyfPk", "t": "Express Your Feelings Through Third Party Stories", "d": 123, "q": [{"q": "What is the purpose of a third-party story?", "o": ["To test the ground on a concern without taking a position or sounding combative", "To justify your price", "To brag about past clients", "To fill time"], "a": 0}, {"q": "In the Salesforce example, what was the concern Dave wanted to raise?", "o": ["The Salesforce administrator was not involved and could put the rollout on hold", "The VP was not the decision maker", "The budget was too small", "The timeline was too aggressive"], "a": 0}, {"q": "Why didn't Dave just say 'you don't actually have the power to decide this'?", "o": ["It is too long", "The VP would not understand", "It would end the meeting", "It is combative and may not even be true"], "a": 3}]}, {"n": 46, "id": "F3Ra2v9CIAg", "t": "There Is No Such Thing as a Good Try", "d": 87, "q": [{"q": "What does the Cortez story illustrate?", "o": ["When the ships were burned there was no going back, so the troops committed and won", "Leaders should take risks", "Never trust your crew", "Explorers were good salespeople"], "a": 0}, {"q": "What point does Dave make with Nike?", "o": ["Brand loyalty is built over time", "Marketing matters", "The slogan is 'Just do it', not 'just try'", "Athletes are natural closers"], "a": 2}, {"q": "What happens if you only 'try'?", "o": ["You still succeed most of the time", "You learn faster", "Nothing changes", "You rationalize failure because you 'tried your best'; commitment raises your probability of success"], "a": 3}]}, {"n": 47, "id": "KQXFRZxi2go", "t": "Selling Is a Broadway Play Performed By a Psychiatrist", "d": 78, "q": [{"q": "What does a psychiatrist do when you tell them a problem?", "o": ["Shares their own experience", "Asks a lot of questions: 'tell me more', 'when does that happen', 'why do you think that happens'", "Solves it right away", "Prescribes something"], "a": 1}, {"q": "A prospect says 'I've got a real problem with my current service.' What does Dave say to do?", "o": ["Immediately explain how you would fix it", "Bad-mouth the current provider", "Offer a discount to switch", "Be a psychiatrist: 'tell me more about that, what's going on?' and stay third-party"], "a": 3}, {"q": "What happens once you get emotionally sucked in?", "o": ["You build rapport", "You have lost control", "You close faster", "You become a trusted advisor"], "a": 1}]}, {"n": 48, "id": "g4j5FYTcbb0", "t": "A Life Without Risk Is a Life Without Growth", "d": 80, "q": [{"q": "Why does Dave say salespeople must keep growing?", "o": ["To earn promotions", "Because managers require it", "To beat coworkers", "The environment keeps changing; the way we sold 10 years ago is not the way we sell today"], "a": 3}, {"q": "How does Dave compare risk to the alternative?", "o": ["Risk should be avoided until you are experienced", "Risk is only for managers", "Risk is always bad", "Risking a mistake is better than indecision or staying stuck in a comfort zone"], "a": 3}, {"q": "How do you minimize the risk when you stretch?", "o": ["Analyze, practice, and do everything necessary to prepare", "Take smaller steps", "Only try it on small accounts", "Ask permission first"], "a": 0}]}, {"n": 49, "id": "2mw_FHm65eI", "t": "Leave Your Child in the Car", "d": 89, "q": [{"q": "What is the 'child' in this rule?", "o": ["The prospect's assistant", "One of three psychological ego states; a sales call is not the place to get your needs met", "A junior salesperson", "Your inner critic"], "a": 1}, {"q": "Which behaviors does Dave describe as the 'child' showing up on a call?", "o": ["Talking too fast", "Taking notes", "Asking too many questions", "Joking around, trying to appease everyone, feeling compelled to give huge discounts, and playing the victim"], "a": 3}, {"q": "What is Dave's practical advice?", "o": ["Roll down the window, leave your ego in the car, make the call, then reunite with it afterward", "Avoid difficult prospects", "Take a break before calls", "Bring a colleague"], "a": 0}]}];
+const TRAINER_EMAIL = "jacobo@aigroups.com";
+const KEY = "sandler-rules-quiz-v1";
+const TOTAL = RULES.length * 3;
+const L = ["A","B","C","D"];
+
+let S = load();
+function load(){ try{ const s = JSON.parse(localStorage.getItem(KEY)||"null"); if(s && s.answers) return s; }catch(e){} return {name:"",answers:{},cur:0,started:null,finished:null,view:"intro"}; }
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+function answered(n){ let c=0; for(let i=0;i<3;i++) if(S.answers[n+"-"+i]!=null) c++; return c; }
+function totalAnswered(){ return Object.keys(S.answers).length; }
+function esc(s){ return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function mmss(d){ return Math.floor(d/60)+":"+String(d%60).padStart(2,"0"); }
+
+const app = document.getElementById("app");
+const bar = document.getElementById("bar");
+
+function render(){
+  if(S.view==="intro") renderIntro();
+  else if(S.view==="results") renderResults();
+  else renderRule(S.cur);
+  window.scrollTo({top:0});
+}
+
+function renderIntro(){
+  bar.hidden = true;
+  const resume = totalAnswered()>0;
+  app.innerHTML = `
+  <div class="card hero">
+    <div class="eyebrow">Sales training</div>
+    <h1 style="margin-top:10px">Sandler Rules Quiz</h1>
+    <p style="margin-top:14px">49 short videos from the Sandler Rules for Salespeople series, three questions each. Every video is under three minutes. Plan on roughly two and a half hours total, and you do not have to finish in one sitting.</p>
+    <ol class="steps">
+      <li><span>Type your name below and start.</span></li>
+      <li><span>For each rule, play the video right on the page, then answer the three questions. You can pause and rewatch as often as you like.</span></li>
+      <li><span>Your answers save automatically on this device. Close the tab and come back any time using the same link on the same device and browser.</span></li>
+      <li><span>After rule 49 you will see your score and a button that sends your results to Jacobo.</span></li>
+    </ol>
+    <div class="field">
+      <label for="name">Your name</label>
+      <input id="name" type="text" autocomplete="name" placeholder="First and last name" value="${esc(S.name||"")}">
+    </div>
+    <div class="nav">
+      <span></span>
+      <button class="btn primary" id="start">${resume ? "Continue where I left off" : "Start the quiz"}</button>
+    </div>
+    ${resume ? `<div class="hint">Progress found on this device: ${totalAnswered()} of ${TOTAL} questions answered.</div>` : ""}
+  </div>`;
+  const nameEl = document.getElementById("name");
+  document.getElementById("start").onclick = () => {
+    const nm = nameEl.value.trim();
+    if(!nm){ nameEl.focus(); nameEl.style.outline="2px solid var(--accent)"; return; }
+    S.name = nm; if(!S.started) S.started = new Date().toISOString();
+    S.view = "rule"; if(S.cur==null) S.cur = 0; save(); render();
+  };
+  nameEl.addEventListener("keydown", e => { if(e.key==="Enter") document.getElementById("start").click(); });
+}
+
+function renderRule(i){
+  const r = RULES[i];
+  bar.hidden = false;
+  document.getElementById("barRule").textContent = `Rule ${r.n} of ${RULES.length}`;
+  document.getElementById("barCount").textContent = `${totalAnswered()} / ${TOTAL} answered`;
+  document.getElementById("barFill").style.width = (100*totalAnswered()/TOTAL)+"%";
+
+  const qs = r.q.map((q,qi)=>`
+    <div class="q">
+      <h3><span>Q${qi+1}</span>${esc(q.q)}</h3>
+      <div class="opts" role="radiogroup" aria-label="Question ${qi+1}">
+        ${q.o.map((o,oi)=>{ const on = S.answers[r.n+"-"+qi]===oi; return `
+        <label class="opt ${on?"on":""}">
+          <input type="radio" name="q${r.n}_${qi}" id="q${r.n}_${qi}_${oi}" value="${oi}" ${on?"checked":""}>
+          <span class="l">${L[oi]}</span><span>${esc(o)}</span>
+        </label>`;}).join("")}
+      </div>
+    </div>`).join("");
+
+  const last = i===RULES.length-1;
+  app.innerHTML = `
+  <div class="card">
+    <div class="eyebrow">Sandler Rule</div>
+    <div class="rulenum">${r.n}</div>
+    <h2 class="ruletitle">${esc(r.t)}</h2>
+    <div class="video"><iframe src="https://www.youtube-nocookie.com/embed/${r.id}?rel=0" title="Sandler Rule ${r.n}: ${esc(r.t)}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+    <div class="hint">Video length ${mmss(r.d)}. If it does not play here, <a href="https://www.youtube.com/watch?v=${r.id}" target="_blank" rel="noopener">open it on YouTube</a>.</div>
+    ${qs}
+    <div class="nav">
+      <button class="btn" id="prev" ${i===0?"disabled":""}>Previous</button>
+      <button class="btn primary" id="next" ${answered(r.n)<3?"disabled":""}>${last ? "Finish and see my score" : "Next rule"}</button>
+    </div>
+    <div class="hint" id="nextHint">${answered(r.n)<3 ? "Answer all three questions to continue." : ""}</div>
+    <details class="jump">
+      <summary>Jump to a rule</summary>
+      <div class="grid" id="grid"></div>
+    </details>
+  </div>`;
+
+  app.querySelectorAll("input[type=radio]").forEach(inp => {
+    inp.addEventListener("change", () => {
+      const [ , n, qi ] = inp.name.match(/q(\d+)_(\d+)/);
+      S.answers[n+"-"+qi] = Number(inp.value); save();
+      inp.closest(".opts").querySelectorAll(".opt").forEach(o=>o.classList.remove("on"));
+      inp.closest(".opt").classList.add("on");
+      const ok = answered(r.n)===3;
+      document.getElementById("next").disabled = !ok;
+      document.getElementById("nextHint").textContent = ok ? "" : "Answer all three questions to continue.";
+      document.getElementById("barCount").textContent = `${totalAnswered()} / ${TOTAL} answered`;
+      document.getElementById("barFill").style.width = (100*totalAnswered()/TOTAL)+"%";
+      paintGrid();
+    });
+  });
+  document.getElementById("prev").onclick = () => { S.cur = i-1; save(); render(); };
+  document.getElementById("next").onclick = () => {
+    if(last){
+      if(totalAnswered()<TOTAL){
+        const missing = RULES.filter(x=>answered(x.n)<3).map(x=>x.n);
+        document.getElementById("nextHint").textContent = "Some rules are not finished yet: " + missing.join(", ") + ". Use the 'Jump to a rule' list below.";
+        return;
+      }
+      S.finished = new Date().toISOString(); S.view="results"; save(); render();
+    } else { S.cur = i+1; save(); render(); }
+  };
+  paintGrid();
+}
+function paintGrid(){
+  const g = document.getElementById("grid"); if(!g) return;
+  g.innerHTML = RULES.map((x,idx)=>{ const a=answered(x.n); const cls = a===3?"done":a>0?"part":""; return `<button class="${cls} ${idx===S.cur?"cur":""}" data-i="${idx}" title="Rule ${x.n}: ${esc(x.t)}">${x.n}</button>`; }).join("");
+  g.querySelectorAll("button").forEach(b=>b.onclick=()=>{ S.cur=Number(b.dataset.i); save(); render(); });
+}
+
+function grade(){
+  let score=0; const per=[]; const missed=[];
+  RULES.forEach(r=>{ let s=0; r.q.forEach((q,qi)=>{ const p=S.answers[r.n+"-"+qi]; if(p===q.a) s++; else missed.push(`R${r.n} Q${qi+1} = ${p==null?"-":L[p]}`); }); per.push(s); score+=s; });
+  return {score,per,missed};
+}
+function reportText(g){
+  const pct = Math.round(100*g.score/TOTAL);
+  const when = new Date(S.finished||Date.now());
+  const perfect = RULES.filter((r,i)=>g.per[i]===3).map(r=>r.n);
+  return [
+    "Sandler Rules Quiz - results",
+    `Name: ${S.name}`,
+    `Score: ${g.score} / ${TOTAL} (${pct}%)`,
+    `Completed: ${when.toLocaleString()}`,
+    "",
+    `Missed questions (${g.missed.length}), rule / question = answer picked:`,
+    ...(g.missed.length? g.missed : ["none"]),
+    "",
+    `Per-rule scores (rule:correct of 3):`,
+    RULES.map((r,i)=>`${r.n}:${g.per[i]}`).join("  "),
+    "",
+    `Perfect rules: ${perfect.length? perfect.join(", ") : "none"}`
+  ].join("\n");
+}
+
+function renderResults(){
+  bar.hidden = true;
+  const g = grade(); const pct = Math.round(100*g.score/TOTAL);
+  const text = reportText(g);
+  const subject = `Sandler Rules Quiz - ${S.name} - ${g.score}/${TOTAL} (${pct}%)`;
+  const gmail = "https://mail.google.com/mail/?view=cm&fs=1&to="+encodeURIComponent(TRAINER_EMAIL)+"&su="+encodeURIComponent(subject)+"&body="+encodeURIComponent(text);
+  const mailto = "mailto:"+TRAINER_EMAIL+"?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(text);
+  app.innerHTML = `
+  <div class="card">
+    <div class="eyebrow">Finished</div>
+    <h2 style="font-size:30px;margin-top:8px">${esc(S.name)}, here is your score</h2>
+    <div class="score"><div class="big">${pct}%</div><div class="sub">${g.score} of ${TOTAL} questions correct across ${RULES.length} rules</div></div>
+    <div class="rgrid">${RULES.map((r,i)=>`<div class="s${g.per[i]}" title="Rule ${r.n}: ${esc(r.t)} - ${g.per[i]} of 3">${r.n}</div>`).join("")}</div>
+    <div class="legend"><span><i style="background:var(--ok-soft)"></i>3 of 3</span><span><i style="background:var(--accent-soft);border:1px solid var(--accent-line)"></i>2 of 3</span><span><i style="background:var(--bad-soft)"></i>0 or 1 of 3</span></div>
+    <p class="hint">The rules marked in red and pink are the ones to bring to your discussion with Jacobo. Correct answers are not shown here on purpose.</p>
+
+    <div class="send">
+      <h3>Step 2 of 2: send your results to Jacobo</h3>
+      <p style="margin:6px 0 0;font-size:15px">This opens a pre-filled email addressed to ${TRAINER_EMAIL}. Just press Send.</p>
+      <div class="row">
+        <a class="btn primary" id="gmailBtn" href="${gmail}" target="_blank" rel="noopener" style="text-decoration:none;display:inline-block">Open in Gmail</a>
+        <a class="btn" id="mailBtn" href="${mailto}" style="text-decoration:none;display:inline-block">Use another mail app</a>
+        <button class="btn" id="copyBtn">Copy results text</button>
+      </div>
+      <div class="toast" id="toast"></div>
+      <details style="margin-top:8px"><summary style="font-size:14px;color:var(--muted);cursor:pointer">If neither button works, copy this text and paste it into an email or text message to Jacobo</summary>
+        <textarea id="txt" readonly>${esc(text)}</textarea>
+      </details>
+    </div>
+    <div class="nav">
+      <button class="btn" id="review">Go back to the questions</button>
+      <button class="btn" id="reset">Start over as someone else</button>
+    </div>
+  </div>`;
+  document.getElementById("copyBtn").onclick = async () => {
+    const t = document.getElementById("toast");
+    try{ await navigator.clipboard.writeText(text); t.textContent="Copied. Paste it into an email or text to Jacobo."; }
+    catch(e){ const ta=document.getElementById("txt"); ta.closest("details").open=true; ta.focus(); ta.select(); t.textContent="Text selected below. Press Ctrl+C or Cmd+C to copy."; }
+  };
+  document.getElementById("review").onclick = () => { S.view="rule"; S.cur=0; save(); render(); };
+  document.getElementById("reset").onclick = () => { if(confirm("This clears all answers on this device. Continue?")){ S={name:"",answers:{},cur:0,started:null,finished:null,view:"intro"}; save(); render(); } };
+}
+render();
+</script>
+
+</body>
+</html>
